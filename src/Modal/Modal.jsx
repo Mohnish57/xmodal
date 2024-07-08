@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./Modal.css";
 
 function Modal({ isOpen, onClose }) {
+  let emailRegex = /^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/g;
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -22,6 +24,9 @@ function Modal({ isOpen, onClose }) {
     }
     if (new Date(formData.dob) > new Date()) {
       alert("invalid date of birth. Date of birth cannot be in future");
+    }
+    if (!emailRegex.test(formData.email)) {
+      alert("Invalid email. Please check your email address.");
     }
     onClose();
   };
@@ -44,7 +49,7 @@ function Modal({ isOpen, onClose }) {
                 required
                 onChange={handleChange}
               />
-              <label htmlFor="email">Email Address:</label>
+              ,<label htmlFor="email">Email Address:</label>
               <input
                 id="email"
                 type="email"
@@ -68,7 +73,9 @@ function Modal({ isOpen, onClose }) {
                 onChange={handleChange}
                 required
               />
-              <button type="submit">Submit</button>
+              <button type="submit" className="submit-button">
+                Submit
+              </button>
             </form>
           </div>
         </div>
